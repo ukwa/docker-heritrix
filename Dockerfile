@@ -15,19 +15,14 @@ RUN \
   wget -q http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz && \
   gunzip GeoLite2-City.mmdb.gz && \
   curl -L -O https://download.elastic.co/beats/filebeat/filebeat_1.0.0-rc1_amd64.deb && \
-  dpkg -i filebeat_1.0.0-rc1_amd64.deb && \
-  curl -L -O https://sbforge.org/nexus/service/local/repositories/thirdparty/content/org/archive/heritrix/heritrix/3.3.0-LBS-2016-02/heritrix-3.3.0-LBS-2016-02-dist.zip && \
-  unzip heritrix-3.3.0-LBS-2016-02-dist.zip
+  dpkg -i filebeat_1.0.0-rc1_amd64.deb
 
-RUN ln -s /heritrix-3.3.0-LBS-2016-02 /heritrix-3
-
-# TODO Add BL Heritrix Modules
-
-ADD filebeat.yml /etc/filebeat/filebeat.yml
-
-ADD start.sh /start.sh
-
+COPY filebeat.yml /etc/filebeat/filebeat.yml
+COPY start.sh /start.sh
 COPY logging.properties /logging.properties
+COPY build.sh /build.sh
+
+RUN /build.sh
 
 EXPOSE 8443
 
