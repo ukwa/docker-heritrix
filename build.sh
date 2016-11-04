@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# 4
+# 6
 #
 # Build BL modules
 git clone https://github.com/ukwa/bl-heritrix-modules.git bl-heritrix-modules

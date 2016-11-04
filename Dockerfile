@@ -17,23 +17,19 @@ RUN \
   curl -L -O https://download.elastic.co/beats/filebeat/filebeat_1.0.0-rc1_amd64.deb && \
   dpkg -i filebeat_1.0.0-rc1_amd64.deb
 
+# Get the H3 LBS binary:
+RUN curl -L -O https://sbforge.org/nexus/service/local/repositories/thirdparty/content/org/archive/heritrix/heritrix/3.3.0-LBS-2016-02/heritrix-3.3.0-LBS-2016-02-dist.zip && \
+    unzip heritrix-3.3.0-LBS-2016-02-dist.zip && \
+    ln -s /heritrix-3.3.0-LBS-2016-02 /h3-bin
+
+# Send in needed files:
 COPY filebeat.yml /etc/filebeat/filebeat.yml
 COPY start.sh /start.sh
-COPY logging.properties /logging.properties
+COPY logging.properties /h3-bin/conf/logging.properties
 COPY build.sh /build.sh
 
-
-# Get the H3 LBS binary:
-RUN \
-    curl -L -O https://sbforge.org/nexus/service/local/repositories/thirdparty/content/org/archive/heritrix/heritrix/3.3.0-LBS-2016-02/heritrix-3.3.0-LBS-2016-02-dist.zip && \
-    unzip heritrix-3.3.0-LBS-2016-02-dist.zip && \
-    ln -s /heritrix-3.3.0-LBS-2016-02 /h3-bin && \
-    cp /logging.properties /h3-bin/conf/logging.properties
-
-
-# Add in BL modules:
+# Build in BL modules:
 RUN /build.sh
-
 
 # Finish setup:
 EXPOSE 8443
