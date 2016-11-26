@@ -22,14 +22,16 @@ RUN curl -L -O https://sbforge.org/nexus/service/local/repositories/thirdparty/c
     unzip heritrix-3.3.0-LBS-2016-02-dist.zip && \
     ln -s /heritrix-3.3.0-LBS-2016-02 /h3-bin
 
+# Add in the UKWA modules
+RUN git clone https://github.com/ukwa/bl-heritrix-modules.git bl-heritrix-modules && \
+    cd /bl-heritrix-modules && \
+    mvn install -DskipTests && \
+    cp /bl-heritrix-modules/target/bl-heritrix-modules-*jar-with-dependencies.jar ./h3-bin/lib
+
 # Send in needed files:
 COPY filebeat.yml /etc/filebeat/filebeat.yml
 COPY start.sh /start.sh
 COPY logging.properties /h3-bin/conf/logging.properties
-COPY build.sh /build.sh
-
-# Build in BL modules:
-RUN /build.sh
 
 # Finish setup:
 EXPOSE 8443
@@ -37,6 +39,8 @@ EXPOSE 8443
 ENV FOREGROUND true
 
 #ENV MONITRIX_ENABLED true
+#ENV HERITRIX_USER heritrix
+#ENV HERITRIX_PASSWORD heritrix
 
 ENV JAVA_OPTS -Xmx2g
 
