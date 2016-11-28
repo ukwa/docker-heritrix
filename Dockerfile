@@ -1,5 +1,5 @@
 
-FROM java:openjdk-7-jdk
+FROM openjdk:7
 
 MAINTAINER Andrew Jackson "anj@anjackson.net"
 
@@ -26,7 +26,7 @@ RUN curl -L -O https://sbforge.org/nexus/service/local/repositories/thirdparty/c
 RUN git clone https://github.com/ukwa/bl-heritrix-modules.git bl-heritrix-modules && \
     cd /bl-heritrix-modules && \
     mvn install -DskipTests && \
-    cp /bl-heritrix-modules/target/bl-heritrix-modules-*jar-with-dependencies.jar ./h3-bin/lib
+    cp /bl-heritrix-modules/target/bl-heritrix-modules-*jar-with-dependencies.jar /h3-bin/lib
 
 # Send in needed files:
 COPY filebeat.yml /etc/filebeat/filebeat.yml
