@@ -1,5 +1,5 @@
 
-FROM openjdk:7
+FROM openjdk:8
 
 MAINTAINER Andrew Jackson "anj@anjackson.net"
 
@@ -42,6 +42,7 @@ ENV FOREGROUND true
 #ENV HERITRIX_USER heritrix
 #ENV HERITRIX_PASSWORD heritrix
 
+#ENV JAVA_OPTS -Xmx2g -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2
 ENV JAVA_OPTS -Xmx2g
 
 VOLUME /jobs
