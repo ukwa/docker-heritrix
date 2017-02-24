@@ -25,7 +25,7 @@ RUN curl -L -O https://sbforge.org/nexus/service/local/repositories/thirdparty/c
 # Add in the UKWA modules
 RUN git clone https://github.com/ukwa/bl-heritrix-modules.git bl-heritrix-modules && \
     cd /bl-heritrix-modules && \
-    git checkout 1.0.1 && \
+    git checkout 1.0.2 && \
     mvn install -DskipTests && \
     cp /bl-heritrix-modules/target/bl-heritrix-modules-*jar-with-dependencies.jar /h3-bin/lib
 
