@@ -1,9 +1,11 @@
 
-FROM openjdk:8
+#FROM openjdk:8u131-jdk
+FROM openjdk:8-slim
 
 MAINTAINER Andrew Jackson "anj@anjackson.net"
 
 # update packages and install maven
+#RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null
 RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
